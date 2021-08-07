@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = "/chat")
 @Slf4j
 public class RoomController {
 
@@ -44,9 +43,10 @@ public class RoomController {
     @DeleteMapping("/room/{roomId}")
     @ResponseBody
     @Transactional
-    public ResponseEntity.BodyBuilder deleteRoom(@PathVariable String roomId){
+    public void deleteRoom(@PathVariable String roomId) {
         log.info(roomId + " 삭제");
         roomService.destroyChatRoom(roomId);
-        return ResponseEntity.ok();
     }
+
+
 }

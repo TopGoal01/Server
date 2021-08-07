@@ -15,28 +15,29 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final SimpMessagingTemplate template;
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @Autowired
     private final MessageService messageService;
 
     @MessageMapping(value = "/chat/enter")
-    public void enter(ChatMessage message){
+    public void enter(ChatMessage message) throws Exception{
         message.setMessage(message.getUserId().getName()+"님이 들어왔습니다.");
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        template.convertAndSend("/chat/" + message.getRoomId(), message);
     }
 
     @MessageMapping(value = "/chat/message")
     @Transactional
-    public void message(ChatMessage message){
+    public void message (ChatMessage message) throws Exception{
         messageService.setMessage(message);
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        template.convertAndSend("/chat/" + message.getRoomId(), message);
     }
 
     @MessageMapping(value="/chat/leave")
-    public void leave(ChatMessage message) {
+    public void leave(ChatMessage message) throws Exception {
         message.setMessage(message.getUserId().getName() + "님이 퇴장하셨습니다.");
-        template.convertAndSend("/sub/chat/room" + message.getRoomId(), message);
+        template.convertAndSend("/chat/" + message.getRoomId(), message);
 
     }
 }

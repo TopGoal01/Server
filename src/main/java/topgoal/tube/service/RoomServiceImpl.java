@@ -1,5 +1,6 @@
 package topgoal.tube.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import topgoal.tube.entity.Room;
@@ -12,6 +13,7 @@ import topgoal.tube.repository.UserRepository;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class RoomServiceImpl implements RoomService {
 
     @Autowired
@@ -33,20 +35,26 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room setChatRoom(String roomName, String userId) {
-        Room room = new Room();
-        User user = userRepository.findById(userId).get();
-        room.setRoomName(roomName);
-        room.setAdmin(user);
-        RoomMember roomMember = new RoomMember();
-        roomMember.setRoomId(room);
-        roomMember.setUserId(user);
-        memberRepository.save(roomMember);
-        return roomRepository.save(room);
+    public Room setChatRoom(String roomName, String userId){
+        if (roomRepository.findByroomName(roomName).isEmpty()) {
+            Room room = new Room();
+            User user = userRepository.findById(userId).get();
+            room.setRoomName(roomName);
+            room.setAdmin(user);
+            RoomMember roomMember = new RoomMember();
+            roomMember.setRoomId(room);
+            roomMember.setUserId(user);
+            memberRepository.save(roomMember);
+            return roomRepository.save(room);
+        }
+        return null;
     }
 
     @Override
     public void destroyChatRoom(String roomId) {
+        Room room = roomRepository.findById(roomId).get();
+        memberRepository.deleteByRoomId(room);
+        log.info("room : " + roomId + " members deleted");
         roomRepository.deleteById(roomId);
     }
 

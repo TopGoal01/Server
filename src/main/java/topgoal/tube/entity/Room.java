@@ -23,10 +23,10 @@ public class Room {
     @Column
     private LocalDateTime createdDate = LocalDateTime.now();
 
-    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER_ID")
     private User admin;
 
     @Column()
-    private int UserCount = 0;
+    private int UserCount = 1;
 }

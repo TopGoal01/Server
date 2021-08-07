@@ -15,12 +15,12 @@ public class RoomMember {
     @Column(name = "joinId")
     private Integer joinId;
 
-    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "USER_Id")
     private User userId;
 
-    @ManyToOne(targetEntity = Room.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ROOM_ID")
+    @ManyToOne(targetEntity = Room.class, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ROOM_Id")
     private Room roomId;
 
 }

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import topgoal.tube.entity.Room;
 import topgoal.tube.entity.RoomMember;
 import topgoal.tube.service.RoomMemberService;
 
@@ -22,15 +23,25 @@ public class RoomMemberController {
     //특정 유저가 속해있는 모든 채팅방 정보 조회
     @GetMapping("/user/rooms")
     @ResponseBody
-    public List<RoomMember> userRooms(@RequestParam String userId){
+    public List<RoomMember> userRooms(@RequestParam String userId) {
         return roomMemberService.getRooms(userId);
     }
-
 
     //특정 방에 속해있는 모든 유저 정보 조회
     @GetMapping("/room/users")
     @ResponseBody
     public List<RoomMember> RoomUsers(@RequestParam String roomId) {
         return roomMemberService.getUsers(roomId);
+    }
+
+    @PostMapping("/enter/{roomId}")
+    @ResponseBody
+    public Room enter(@PathVariable String roomId, @RequestParam String userId) {
+        return roomMemberService.setRoomMember(userId, roomId);
+    }
+
+    @DeleteMapping("/leave/{roomId}")
+    public Room leave(@PathVariable String roomId, @RequestParam String userId) {
+        return roomMemberService.deleteRoomMember(userId, roomId);
     }
 }

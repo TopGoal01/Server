@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import topgoal.tube.entity.ChatMessage;
 import topgoal.tube.repository.MessageRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class MessageServiceImpl implements MessageService{
 
@@ -12,6 +14,7 @@ public class MessageServiceImpl implements MessageService{
     private MessageRepository repository;
 
     @Override
+    @Transactional
     public ChatMessage setMessage(ChatMessage message) {
         return repository.save(message);
     }

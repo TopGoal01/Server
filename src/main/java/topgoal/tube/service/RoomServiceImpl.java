@@ -10,6 +10,7 @@ import topgoal.tube.repository.RoomMemberRepository;
 import topgoal.tube.repository.RoomRepository;
 import topgoal.tube.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional
     public Room setChatRoom(String roomName, String userId){
         if (roomRepository.findByroomName(roomName).isEmpty()) {
             Room room = new Room();
@@ -51,6 +53,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional
     public void destroyChatRoom(String roomId) {
         Room room = roomRepository.findById(roomId).get();
         memberRepository.deleteByRoomId(room);

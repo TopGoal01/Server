@@ -23,7 +23,6 @@ public class ChatController {
 
 
     @MessageMapping("/chat/message")
-    @Transactional
     public void message (ChatMessage message) throws Exception{
         messageService.setMessage(message);
         template.convertAndSend("/chat/" + message.getRoomId(), message);

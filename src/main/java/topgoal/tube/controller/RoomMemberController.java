@@ -41,7 +41,7 @@ public class RoomMemberController {
     }
 
     @DeleteMapping("/leave/{roomId}")
-    public Room leave(@PathVariable String roomId, @RequestParam String userId) {
-        return roomMemberService.deleteRoomMember(userId, roomId);
+    public void leave(@PathVariable String roomId, @RequestParam String userId) {
+        roomMemberService.deleteRoomMember(userId, roomId);
     }
 }

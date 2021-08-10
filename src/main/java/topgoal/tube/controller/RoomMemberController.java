@@ -34,13 +34,13 @@ public class RoomMemberController {
         return roomMemberService.getUsers(roomId);
     }
 
-    @PostMapping("/enter/{roomId}")
+    @PostMapping("/user/{roomId}")
     @ResponseBody
     public Room enter(@PathVariable String roomId, @RequestParam String userId) {
         return roomMemberService.setRoomMember(userId, roomId);
     }
 
-    @DeleteMapping("/leave/{roomId}")
+    @DeleteMapping("/user/{roomId}")
     public void leave(@PathVariable String roomId, @RequestParam String userId) {
         roomMemberService.deleteRoomMember(userId, roomId);
     }

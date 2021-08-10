@@ -3,16 +3,12 @@ package topgoal.tube.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import topgoal.tube.entity.Room;
-import topgoal.tube.entity.RoomMember;
-import topgoal.tube.service.RoomMemberService;
 import topgoal.tube.service.RoomService;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,7 +37,6 @@ public class RoomController {
 
     //채팅방 삭제
     @DeleteMapping("/room/{roomId}")
-    @ResponseBody
     @Transactional
     public void deleteRoom(@PathVariable String roomId) {
         log.info(roomId + " 삭제");

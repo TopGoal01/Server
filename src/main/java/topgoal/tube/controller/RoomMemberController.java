@@ -23,7 +23,7 @@ public class RoomMemberController {
     //특정 유저가 속해있는 모든 채팅방 정보 조회
     @GetMapping("/user/rooms")
     @ResponseBody
-    public List<RoomMember> userRooms(@RequestParam String userId) {
+    protected List<RoomMember> userRooms(@RequestParam String userId) {
         return roomMemberService.getRooms(userId);
     }
 

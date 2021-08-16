@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import topgoal.tube.entity.ChatMessage;
 import topgoal.tube.service.MessageService;
 
-import javax.transaction.Transactional;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -20,7 +18,6 @@ public class ChatController {
 
     @Autowired
     private final MessageService messageService;
-
 
     @MessageMapping("/chat/message")
     public void message (ChatMessage message) throws Exception{

@@ -18,7 +18,12 @@ public class User {
     private String Id;
 
     @Column
+    private String email;
+
+    @Column
     private String name;
 
+    @Column
+    private String userPic;
 
 }

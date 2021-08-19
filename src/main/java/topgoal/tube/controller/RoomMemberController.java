@@ -9,7 +9,6 @@ import topgoal.tube.entity.Room;
 import topgoal.tube.entity.RoomMember;
 import topgoal.tube.service.RoomMemberService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Controller

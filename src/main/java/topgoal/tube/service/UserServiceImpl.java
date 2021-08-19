@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import topgoal.tube.entity.User;
 import topgoal.tube.repository.UserRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -17,6 +19,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
+    @Transactional
     public User authUser(String idToken) throws FirebaseAuthException {
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
         String uid = decodedToken.getUid();
@@ -25,6 +28,8 @@ public class UserServiceImpl implements UserService {
             User newUser = new User();
             newUser.setId(uid);
             newUser.setName(decodedToken.getName());
+            newUser.setUserPic(decodedToken.getPicture());
+            newUser.setEmail(decodedToken.getEmail());
             userRepository.save(newUser);
             log.info("New User uid : " + uid);
             return newUser;

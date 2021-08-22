@@ -37,19 +37,15 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public Room setChatRoom(String roomName, String userId){
-        if (roomRepository.findByroomName(roomName).isEmpty()) {
+    public Room setChatRoom(String userId){
             Room room = new Room();
             User user = userRepository.findById(userId).get();
-            room.setRoomName(roomName);
             room.setAdmin(user);
             RoomMember roomMember = new RoomMember();
             roomMember.setRoomId(room);
             roomMember.setUserId(user);
             memberRepository.save(roomMember);
             return roomRepository.save(room);
-        }
-        return null;
     }
 
     @Override

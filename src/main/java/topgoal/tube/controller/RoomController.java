@@ -19,12 +19,12 @@ public class RoomController {
     private final RoomService roomService;
 
     //채팅방 개설
-    @PostMapping(value = "/room/{roomName}")
+    @PostMapping(value = "/room/{userID}")
     @ResponseBody
     @Transactional
-    public Room create(@PathVariable String roomName, @RequestParam String user) throws Exception {
-        log.info("Create New Room, admin : " + user);
-        return roomService.setChatRoom(roomName, user);
+    public Room create(@PathVariable String userID) throws Exception {
+        log.info("Create New Room, admin : " + userID);
+        return roomService.setChatRoom(userID);
     }
 
     //채팅방 조회

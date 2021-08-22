@@ -18,9 +18,6 @@ public class Room {
     private String roomId= UUID.randomUUID().toString();
 
     @Column
-    private String roomName;
-
-    @Column
     private LocalDateTime createdDate = LocalDateTime.now();
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)

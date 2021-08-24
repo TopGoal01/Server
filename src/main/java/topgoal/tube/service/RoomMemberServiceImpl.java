@@ -60,6 +60,7 @@ public class RoomMemberServiceImpl implements RoomMemberService {
         if (room.getUserCount() == 0 || room.getAdmin().equals(user) ) {
             roomRepository.deleteById(roomId);
             messageRepository.deleteByRoomId(room);
+            return null;
         }
         log.info("room " + roomId + " deleted");
         return room;

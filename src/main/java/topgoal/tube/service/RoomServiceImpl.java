@@ -1,5 +1,7 @@
 package topgoal.tube.service;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,18 +15,14 @@ import topgoal.tube.repository.UserRepository;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-    @Autowired
-    private RoomMemberRepository memberRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Room getChatRoom(String RoomId) {
@@ -57,4 +55,5 @@ public class RoomServiceImpl implements RoomService {
         roomRepository.deleteById(roomId);
     }
 
+    private final RoomMemberRepository memberRepository;
 }

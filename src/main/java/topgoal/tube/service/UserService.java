@@ -6,9 +6,9 @@ import topgoal.tube.entity.User;
 
 import java.util.Optional;
 
-@Service
 public interface UserService {
     public User authUser(String idToken) throws FirebaseAuthException;
 
     public Optional<User> userInfo(String userId);
+
 }

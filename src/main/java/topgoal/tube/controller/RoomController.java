@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import topgoal.tube.entity.Room;
 import topgoal.tube.service.RoomService;
@@ -15,7 +16,6 @@ import javax.transaction.Transactional;
 @Slf4j
 public class RoomController {
 
-    @Autowired
     private final RoomService roomService;
 
     //채팅방 개설

@@ -1,5 +1,6 @@
 package topgoal.tube.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +15,15 @@ import topgoal.tube.repository.UserRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class RoomMemberServiceImpl implements RoomMemberService {
 
-    @Autowired
-    private RoomMemberRepository repository;
-    @Autowired
-    private RoomRepository roomRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private MessageRepository messageRepository;
+    private final RoomMemberRepository repository;
+    private final RoomRepository roomRepository;
+    private final UserRepository userRepository;
+    private final MessageRepository messageRepository;
 
     @Override
     public List<RoomMember> getRooms(String userId) {
@@ -45,10 +43,10 @@ public class RoomMemberServiceImpl implements RoomMemberService {
         RoomMember roomMember = new RoomMember();
         Room room = roomRepository.findById(roomId).get();
         roomMember.setRoomId(room);
-        log.info("room");
         roomMember.setUserId(userRepository.findById(userId).get());
         repository.save(roomMember);
         room.setUserCount(room.getUserCount()+1);
+        log.info("user : " + userId+ " joined room "+roomId);
         return room;
     }
 
@@ -63,6 +61,7 @@ public class RoomMemberServiceImpl implements RoomMemberService {
             roomRepository.deleteById(roomId);
             messageRepository.deleteByRoomId(room);
         }
+        log.info("room " + roomId + " deleted");
         return room;
     }
 

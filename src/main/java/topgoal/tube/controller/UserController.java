@@ -16,15 +16,16 @@ import java.util.Optional;
 @Slf4j
 public class UserController {
 
-    @Autowired
     private final UserService userService;
 
     @PostMapping("/user/{userToken}")
+    @ResponseBody
     public User userAuth(@PathVariable String userToken) throws FirebaseAuthException {
         return userService.authUser(userToken);
     }
 
     @GetMapping("/user/{userId}")
+    @ResponseBody
     public Optional<User> getUserInfo(@PathVariable String userId){
         log.info("getUserIfo : "+userId);
         return userService.userInfo(userId);

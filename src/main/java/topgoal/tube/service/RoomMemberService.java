@@ -6,7 +6,6 @@ import topgoal.tube.entity.RoomMember;
 
 import java.util.List;
 
-@Service
 public interface RoomMemberService {
     List<RoomMember> getRooms(String userId);
     List<RoomMember> getUsers(String roomID);

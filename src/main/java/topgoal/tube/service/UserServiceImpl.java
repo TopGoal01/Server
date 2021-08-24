@@ -12,12 +12,12 @@ import topgoal.tube.repository.UserRepository;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Service
 @Slf4j
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Override
     @Transactional
@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> userInfo(String userId) {
-        return userRepository.findById(userId);
+        Optional<User> user = userRepository.findById(userId);
+        return user;
     }
-
-
 }

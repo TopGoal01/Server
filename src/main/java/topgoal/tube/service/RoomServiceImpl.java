@@ -34,7 +34,6 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Transactional
     public Room setChatRoom(String userToken){
             Room room = new Room();
             User user = userRepository.findByIdToken(userToken).get(0);
@@ -47,7 +46,6 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Transactional
     public void destroyChatRoom(String roomId) {
         Room room = roomRepository.findById(roomId).get();
         memberRepository.deleteByRoomId(room);

@@ -18,7 +18,7 @@ public class ChatController {
     private final MessageService messageService;
 
     @MessageMapping("/join")
-    public void join(ChatMessage message) {
+    public void join(ChatMessage message) throws Exception{
         message.setMessage(message.getUserId().getName() + "님이 입장하셨습니다.");
         template.convertAndSend("/chat/"+message.getRoomId(), message);
     }
@@ -27,6 +27,12 @@ public class ChatController {
     public void message(ChatMessage message) throws Exception {
         messageService.setMessage(message);
         template.convertAndSend("/chat/" + message.getRoomId(), message);
+    }
+
+    @MessageMapping("/leave")
+    public void leave(ChatMessage message) throws Exception{
+        message.setMessage(message.getUserId().getName() + "님이 퇴장하셨습니다.");
+        template.convertAndSend("/chat"+message.getRoomId(), message);
     }
 
 }

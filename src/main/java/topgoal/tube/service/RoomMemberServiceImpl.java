@@ -26,8 +26,8 @@ public class RoomMemberServiceImpl implements RoomMemberService {
     private final MessageRepository messageRepository;
 
     @Override
-    public List<RoomMember> getRooms(String userId) {
-        User user = userRepository.findById(userId).get();
+    public List<RoomMember> getRooms(String userToken) {
+        User user = userRepository.findByIdToken(userToken).stream().findAny().get();
         return repository.findByUserId(user);
     }
 

@@ -1,6 +1,8 @@
 package topgoal.tube.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +20,8 @@ public class Room {
     private String roomId= UUID.randomUUID().toString();
 
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @CreatedDate
     private LocalDateTime createdDate = LocalDateTime.now();
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)

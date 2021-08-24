@@ -1,10 +1,14 @@
 package topgoal.tube.service;
 
 import com.google.firebase.auth.FirebaseAuthException;
+import org.springframework.stereotype.Service;
 import topgoal.tube.entity.User;
 
+import java.util.Optional;
+
+@Service
 public interface UserService {
     public User authUser(String idToken) throws FirebaseAuthException;
 
-    public User userInfo(String userId);
+    public Optional<User> userInfo(String userId);
 }

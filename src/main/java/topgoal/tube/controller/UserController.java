@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import topgoal.tube.entity.User;
 import topgoal.tube.service.UserService;
 
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -23,7 +25,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public User getUserInfo(@PathVariable String userId){
+    public Optional<User> getUserInfo(@PathVariable String userId){
+        log.info("getUserIfo : "+userId);
         return userService.userInfo(userId);
     }
 }

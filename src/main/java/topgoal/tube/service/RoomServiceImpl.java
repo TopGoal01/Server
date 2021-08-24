@@ -35,9 +35,9 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public Room setChatRoom(String userId){
+    public Room setChatRoom(String userToken){
             Room room = new Room();
-            User user = userRepository.findById(userId).get();
+            User user = userRepository.findByIdToken(userToken).get(0);
             room.setAdmin(user);
             RoomMember roomMember = new RoomMember();
             roomMember.setRoomId(room);

@@ -25,24 +25,31 @@ public class UserServiceImpl implements UserService {
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
         String uid = decodedToken.getUid();
 
-        if (userRepository.findById(uid).isPresent()) {
+        if (userRepository.findById(uid).isEmpty()) {
             User newUser = new User();
             newUser.setId(uid);
             newUser.setName(decodedToken.getName());
             newUser.setUserPic(decodedToken.getPicture());
             newUser.setEmail(decodedToken.getEmail());
+            newUser.setIdToken(idToken);
             userRepository.save(newUser);
             log.info("New User uid : " + uid);
             return newUser;
         }else{
             log.info("User Name :" + decodedToken.getName() + " uid : " + uid + " logged");
+            //토큰 갱신
+            Optional<User> user = userRepository.findById(uid);
+            user.ifPresent(selectUser -> {
+                selectUser.setIdToken(idToken);
+                User newUser = userRepository.save(selectUser);
+            });
             return userRepository.findById(uid).get();
         }
     }
 
     @Override
-    public Optional<User> userInfo(String userId) {
-        Optional<User> user = userRepository.findById(userId);
+    public Optional<User> userInfo(String userToken) {
+        Optional<User> user = userRepository.findByIdToken(userToken).stream().findAny();
         return user;
     }
 }

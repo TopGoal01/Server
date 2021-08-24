@@ -24,10 +24,9 @@ public class UserController {
         return userService.authUser(userToken);
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/{userToken}")
     @ResponseBody
-    public Optional<User> getUserInfo(@PathVariable String userId){
-        log.info("getUserIfo : "+userId);
-        return userService.userInfo(userId);
+    public Optional<User> getUserInfo(@PathVariable String userToken){
+        return userService.userInfo(userToken);
     }
 }

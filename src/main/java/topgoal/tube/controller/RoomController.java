@@ -2,9 +2,7 @@ package topgoal.tube.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import topgoal.tube.entity.Room;
 import topgoal.tube.service.RoomService;
@@ -19,12 +17,12 @@ public class RoomController {
     private final RoomService roomService;
 
     //채팅방 개설
-    @PostMapping(value = "/room/{userID}")
+    @PostMapping(value = "/room/{userToken}")
     @ResponseBody
     @Transactional
-    public Room create(@PathVariable String userID) throws Exception {
-        log.info("Create New Room, admin : " + userID);
-        return roomService.setChatRoom(userID);
+    public Room create(@PathVariable String userToken) throws Exception {
+        log.info("Create New Room, admin : " + userToken);
+        return roomService.setChatRoom(userToken);
     }
 
     //채팅방 조회

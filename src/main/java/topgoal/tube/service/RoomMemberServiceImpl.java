@@ -39,22 +39,22 @@ public class RoomMemberServiceImpl implements RoomMemberService {
 
     @Override
     @Transactional
-    public Room setRoomMember(String userId, String roomId){
+    public Room setRoomMember(String userToken, String roomId){
         RoomMember roomMember = new RoomMember();
         Room room = roomRepository.findById(roomId).get();
         roomMember.setRoomId(room);
-        roomMember.setUserId(userRepository.findById(userId).get());
+        roomMember.setUserId(userRepository.findByIdToken(userToken).get(0));
         repository.save(roomMember);
         room.setUserCount(room.getUserCount()+1);
-        log.info("user : " + userId+ " joined room "+roomId);
+        log.info("user : " + userToken+ " joined room "+roomId);
         return room;
     }
 
     @Override
     @Transactional
-    public Room deleteRoomMember(String userId, String roomId) {
+    public Room deleteRoomMember(String userToken, String roomId) {
         Room room = roomRepository.findById(roomId).get();
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findByIdToken(userToken).get(0);
         room.setUserCount(room.getUserCount() - 1);
         repository.deleteByRoomIdAndUserId(room, user);
         if (room.getUserCount() == 0 || room.getAdmin().equals(user) ) {

@@ -22,8 +22,8 @@ public class RoomMemberController {
     //특정 유저가 속해있는 모든 채팅방 정보 조회
     @GetMapping("/user/rooms")
     @ResponseBody
-    protected List<RoomMember> userRooms(@RequestParam String userId) {
-        return roomMemberService.getRooms(userId);
+    protected List<RoomMember> userRooms(@RequestParam String userToken) {
+        return roomMemberService.getRooms(userToken);
     }
 
     //특정 방에 속해있는 모든 유저 정보 조회
@@ -35,12 +35,12 @@ public class RoomMemberController {
 
     @PostMapping("/user/{roomId}")
     @ResponseBody
-    public Room enter(@PathVariable String roomId, @RequestParam String userId) {
-        return roomMemberService.setRoomMember(userId, roomId);
+    public Room enter(@PathVariable String roomId, @RequestParam String userToken) {
+        return roomMemberService.setRoomMember(userToken, roomId);
     }
 
     @DeleteMapping("/user/{roomId}")
-    public void leave(@PathVariable String roomId, @RequestParam String userId) {
-        roomMemberService.deleteRoomMember(userId, roomId);
+    public void leave(@PathVariable String roomId, @RequestParam String userToken) {
+        roomMemberService.deleteRoomMember(userToken, roomId);
     }
 }

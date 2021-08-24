@@ -26,4 +26,7 @@ public class User {
     @Column
     private String userPic;
 
+    @Column
+    private String idToken;
+
 }

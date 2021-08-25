@@ -6,8 +6,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import topgoal.tube.DTO.MessageDTO;
 import topgoal.tube.entity.ChatMessage;
 import topgoal.tube.service.MessageService;
+
+import java.time.LocalDateTime;
 
 @Profile("stomp")
 @Controller
@@ -18,20 +21,20 @@ public class ChatController {
     private final MessageService messageService;
 
     @MessageMapping("/join")
-    public void join(ChatMessage message) throws Exception{
-        message.setMessage(message.getUserId().getName() + "님이 입장하셨습니다.");
+    public void join(MessageDTO message) throws Exception{
         template.convertAndSend("/chat/"+message.getRoomId(), message);
     }
 
     @MessageMapping("/message")
-    public void message(ChatMessage message) throws Exception {
+    public void message(MessageDTO message) throws Exception {
+        message.setLocalDateTime(LocalDateTime.now());
         messageService.setMessage(message);
         template.convertAndSend("/chat/" + message.getRoomId(), message);
     }
 
     @MessageMapping("/leave")
-    public void leave(ChatMessage message) throws Exception{
-        message.setMessage(message.getUserId().getName() + "님이 퇴장하셨습니다.");
+    public void leave(MessageDTO message) throws Exception{
+        message.setMessage(message.getUserID() + "님이 퇴장하셨습니다.");
         template.convertAndSend("/chat"+message.getRoomId(), message);
     }
 

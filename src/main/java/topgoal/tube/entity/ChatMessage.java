@@ -1,9 +1,7 @@
 package topgoal.tube.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import topgoal.tube.DTO.MessageDTO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "ChatMessage")
+@Builder
 public class ChatMessage {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long messageId;
@@ -27,10 +26,5 @@ public class ChatMessage {
     @ManyToOne(targetEntity = Room.class)
     @JoinColumn(name="ROOM_ID")
     private Room roomId;
-
-
-    @Column
-    private LocalDateTime createdDate = LocalDateTime.now();
-
 
 }

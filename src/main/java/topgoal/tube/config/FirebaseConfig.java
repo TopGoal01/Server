@@ -12,17 +12,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Configuration
-@Slf4j
 public class FirebaseConfig {
+
+    private FirebaseApp firebaseApp;
 
     @PostConstruct
     public void init(){
         try{
             FileInputStream serviceAccount =
                     new FileInputStream("src/main/resources/serviceKey.json");
-            FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
-            FirebaseApp.initializeApp(options);
-            log.info("Firebase App Initiated");
+            FirebaseOptions options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
+            firebaseApp = FirebaseApp.initializeApp(options);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

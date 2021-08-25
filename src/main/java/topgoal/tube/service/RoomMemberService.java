@@ -1,6 +1,5 @@
 package topgoal.tube.service;
 
-import org.springframework.stereotype.Service;
 import topgoal.tube.entity.Room;
 import topgoal.tube.entity.RoomMember;
 

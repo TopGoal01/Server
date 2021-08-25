@@ -1,7 +1,6 @@
 package topgoal.tube.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import topgoal.tube.entity.Room;
 import topgoal.tube.entity.RoomMember;

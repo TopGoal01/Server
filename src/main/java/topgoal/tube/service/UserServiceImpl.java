@@ -22,11 +22,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User authUser(String idToken) throws FirebaseAuthException {
-        log.info("auth USer : " +idToken);
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
         String uid = decodedToken.getUid();
 
-        log.info("user id : "+uid);
         if (userRepository.findById(uid).isEmpty()) {
             User newUser = new User();
             newUser.setId(uid);

@@ -11,5 +11,6 @@ public class MessageDTO {
     String message;
     String userID;
     String roomId;
+    String picUrl;
     LocalDateTime localDateTime;
 }

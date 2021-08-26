@@ -28,5 +28,6 @@ public class MessageServiceImpl implements MessageService{
                 .userId(userRepository.findById(message.getUserID()).get())
                 .message(message.getMessage())
                 .roomId(roomRepository.findById(message.getRoomId()).get()).build());
+
     }
 }

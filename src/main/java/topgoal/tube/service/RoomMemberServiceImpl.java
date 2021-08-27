@@ -56,7 +56,7 @@ public class RoomMemberServiceImpl implements RoomMemberService {
             roomMember.setUserId(userRepository.findById(uid).get());
             repository.save(roomMember);
             room.setUserCount(room.getUserCount() + 1);
-            log.info("user : " + userToken + " joined room " + roomId);
+            log.info("user : " + uid + " joined room " + roomId);
             return room;
         }
         return roomRepository.findById(byUserId.get(0).getRoomId().getRoomId()).get();

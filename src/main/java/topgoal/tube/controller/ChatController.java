@@ -34,7 +34,6 @@ public class ChatController {
 
     @MessageMapping("/leave")
     public void leave(MessageDTO message) throws Exception{
-        message.setMessage(message.getUserID() + "님이 퇴장하셨습니다.");
         template.convertAndSend("/chat"+message.getRoomId(), message);
     }
 

@@ -47,14 +47,19 @@ public class RoomMemberServiceImpl implements RoomMemberService {
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userToken);
         String uid = decodedToken.getUid();
 
-        RoomMember roomMember = new RoomMember();
-        Room room = roomRepository.findById(roomId).get();
-        roomMember.setRoomId(room);
-        roomMember.setUserId(userRepository.findById(uid).get());
-        repository.save(roomMember);
-        room.setUserCount(room.getUserCount()+1);
-        log.info("user : " + userToken+ " joined room "+roomId);
-        return room;
+        List<RoomMember> byUserId = repository.findByUserId(userRepository.findById(uid).get());
+
+        if (byUserId.isEmpty()) {
+            RoomMember roomMember = new RoomMember();
+            Room room = roomRepository.findById(roomId).get();
+            roomMember.setRoomId(room);
+            roomMember.setUserId(userRepository.findById(uid).get());
+            repository.save(roomMember);
+            room.setUserCount(room.getUserCount() + 1);
+            log.info("user : " + userToken + " joined room " + roomId);
+            return room;
+        }
+        return roomRepository.findById(byUserId.get(0).getRoomId().getRoomId()).get();
     }
 
     @Override

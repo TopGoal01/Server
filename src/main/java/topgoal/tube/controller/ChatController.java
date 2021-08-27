@@ -25,6 +25,7 @@ public class ChatController {
 
     @MessageMapping("/join")
     public void join(MessageDTO message) throws Exception{
+        message.setLocalDateTime(LocalDateTime.now());
         template.convertAndSend("/topic/chat/"+message.getRoomId(), message);
         log.info(message.getRoomId()+" greetings user : " + message.getUserID());
     }
@@ -32,6 +33,7 @@ public class ChatController {
     @MessageMapping("/message")
     public void message(MessageDTO message) throws Exception {
         log.info("message Set");
+        message.setLocalDateTime(LocalDateTime.now());
         messageService.setMessage(message);
         template.convertAndSend("/topic/chat/" + message.getRoomId(), message);
         log.info("roomID : "+message.getRoomId()+" user : " + message.getUserID() + "message :" +message.getMessage());

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class MessageDTO {
     String message;
     String userID;
+    String userName;
     String roomId;
     String picUrl;
     LocalDateTime localDateTime;

@@ -1,5 +1,6 @@
 package topgoal.tube.controller;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -24,7 +25,7 @@ public class RoomMemberController {
     //특정 유저가 속해있는 모든 채팅방 정보 조회
     @GetMapping("/member/rooms")
     @ResponseBody
-    protected List<RoomMember> userRooms(@RequestParam String userToken) {
+    protected List<RoomMember> userRooms(@RequestParam String userToken) throws FirebaseAuthException {
         return roomMemberService.getRooms(userToken);
     }
 
@@ -37,12 +38,12 @@ public class RoomMemberController {
 
     @PostMapping("/member/{roomId}")
     @ResponseBody
-    public Room enter(@PathVariable String roomId, @RequestParam String userToken) {
+    public Room enter(@PathVariable String roomId, @RequestParam String userToken) throws FirebaseAuthException {
         return roomMemberService.setRoomMember(userToken, roomId);
     }
 
     @DeleteMapping("/member/{roomId}")
-    public ResponseEntity<? extends BasicResponseHandler> leave(@PathVariable String roomId, @RequestParam String userToken) {
+    public ResponseEntity<? extends BasicResponseHandler> leave(@PathVariable String roomId, @RequestParam String userToken) throws FirebaseAuthException {
         roomMemberService.deleteRoomMember(userToken, roomId);
         return ResponseEntity.noContent().build();
     }

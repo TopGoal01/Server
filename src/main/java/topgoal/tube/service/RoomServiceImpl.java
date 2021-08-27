@@ -1,5 +1,8 @@
 package topgoal.tube.service;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +37,12 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room setChatRoom(String userToken){
+    public Room setChatRoom(String userToken) throws FirebaseAuthException {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userToken);
+            String uid = decodedToken.getUid();
+
             Room room = new Room();
-            User user = userRepository.findByIdToken(userToken).get(0);
+            User user = userRepository.findById(uid).get();
             room.setAdmin(user);
             RoomMember roomMember = new RoomMember();
             roomMember.setRoomId(room);

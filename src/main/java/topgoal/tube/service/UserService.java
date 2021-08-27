@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface UserService {
     public User authUser(String idToken) throws FirebaseAuthException;
 
-    public Optional<User> userInfo(String userId);
+    public Optional<User> userInfo(String userId) throws FirebaseAuthException;
 
 }

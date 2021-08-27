@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("/user/{userToken}")
     @ResponseBody
-    public Optional<User> getUserInfo(@PathVariable String userToken){
+    public Optional<User> getUserInfo(@PathVariable String userToken) throws FirebaseAuthException {
         return userService.userInfo(userToken);
     }
 }

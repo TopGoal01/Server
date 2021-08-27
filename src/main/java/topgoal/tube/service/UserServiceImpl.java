@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
             //토큰 갱신
             Optional<User> user = userRepository.findById(uid);
             user.ifPresent(selectUser -> {
+                selectUser.setUserPic(decodedToken.getPicture());
                 selectUser.setIdToken(idToken);
                 User newUser = userRepository.save(selectUser);
             });
@@ -48,8 +49,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> userInfo(String userToken) {
-        Optional<User> user = userRepository.findByIdToken(userToken).stream().findAny();
+    public Optional<User> userInfo(String userToken) throws FirebaseAuthException {
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userToken);
+        String uid = decodedToken.getUid();
+        Optional<User> user = userRepository.findById(uid);
+
         return user;
     }
 }

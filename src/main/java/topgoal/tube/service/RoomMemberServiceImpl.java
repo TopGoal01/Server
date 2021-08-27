@@ -1,5 +1,8 @@
 package topgoal.tube.service;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,8 +28,10 @@ public class RoomMemberServiceImpl implements RoomMemberService {
     private final MessageRepository messageRepository;
 
     @Override
-    public List<RoomMember> getRooms(String userToken) {
-        User user = userRepository.findByIdToken(userToken).stream().findAny().get();
+    public List<RoomMember> getRooms(String userToken) throws FirebaseAuthException {
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userToken);
+        String uid = decodedToken.getUid();
+        User user = userRepository.findById(uid).get();
         return repository.findByUserId(user);
     }
 
@@ -38,11 +43,14 @@ public class RoomMemberServiceImpl implements RoomMemberService {
 
     @Override
     @Transactional
-    public Room setRoomMember(String userToken, String roomId){
+    public Room setRoomMember(String userToken, String roomId) throws FirebaseAuthException {
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userToken);
+        String uid = decodedToken.getUid();
+
         RoomMember roomMember = new RoomMember();
         Room room = roomRepository.findById(roomId).get();
         roomMember.setRoomId(room);
-        roomMember.setUserId(userRepository.findByIdToken(userToken).get(0));
+        roomMember.setUserId(userRepository.findById(uid).get());
         repository.save(roomMember);
         room.setUserCount(room.getUserCount()+1);
         log.info("user : " + userToken+ " joined room "+roomId);
@@ -51,9 +59,12 @@ public class RoomMemberServiceImpl implements RoomMemberService {
 
     @Override
     @Transactional
-    public Room deleteRoomMember(String userToken, String roomId) {
+    public Room deleteRoomMember(String userToken, String roomId) throws FirebaseAuthException {
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userToken);
+        String uid = decodedToken.getUid();
+
         Room room = roomRepository.findById(roomId).get();
-        User user = userRepository.findByIdToken(userToken).get(0);
+        User user = userRepository.findById(uid).get();
         room.setUserCount(room.getUserCount() - 1);
         repository.deleteByRoomIdAndUserId(room, user);
         if (room.getUserCount() == 0 || room.getAdmin().equals(user) ) {
